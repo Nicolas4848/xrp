@@ -40,20 +40,19 @@ export default function Navbar() {
     return (
         <>
             <nav
-                className={`fixed w-full z-50 top-0 start-0 transition-all duration-300 border-b ${
-                    scrolled
+                className={`fixed w-full z-50 top-0 start-0 transition-all duration-300 border-b ${scrolled
                         ? "bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-slate-200 dark:border-slate-800 shadow-sm py-2"
                         : "bg-transparent border-transparent py-4"
-                }`}
+                    }`}
             >
                 <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto px-4 md:px-8">
-                    
+
                     {/* Logo Area */}
                     <Link href="/" className="flex items-center group">
                         <div className="relative transition-transform duration-300 group-hover:scale-105">
                             {/* dark:invert turns the black logo white in dark mode */}
                             <Image
-                                src={'https://xrpl.org/img/logo.svg'}
+                                src={'/XRPLedger_DevPortal-black.svg'}
                                 alt="XRP LOGO"
                                 height={40}
                                 width={140}
@@ -80,7 +79,7 @@ export default function Navbar() {
 
                     {/* Right Side Actions */}
                     <div className="flex items-center gap-4">
-                        
+
                         {/* Theme Toggle Button */}
                         {mounted && (
                             <button
@@ -120,11 +119,10 @@ export default function Navbar() {
             </nav>
 
             {/* Mobile Menu Overlay */}
-            <div 
-                className={`fixed inset-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl md:hidden transition-all duration-300 ease-in-out ${
-                    isOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-4"
-                }`}
-                style={{ top: '0px', paddingTop: '80px' }} 
+            <div
+                className={`fixed inset-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-xl md:hidden transition-all duration-300 ease-in-out ${isOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-4"
+                    }`}
+                style={{ top: '0px', paddingTop: '80px' }}
             >
                 <div className="flex flex-col items-center justify-center space-y-8 p-6 h-full">
                     {navLinks.map((link) => (
@@ -138,11 +136,11 @@ export default function Navbar() {
                         </Link>
                     ))}
                     <div className="pt-8 w-full max-w-xs">
-                         <Link href="/dapp">
+                        <Link href="/dapp">
                             <button className="w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-4 rounded-full shadow-xl hover:bg-blue-600 dark:hover:bg-slate-200 transition-all flex items-center justify-center gap-2">
                                 Connect Wallet <ChevronRight size={18} />
                             </button>
-                         </Link>
+                        </Link>
                     </div>
                 </div>
             </div>
