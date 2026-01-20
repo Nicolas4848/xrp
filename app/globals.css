@@ -5,18 +5,19 @@
   --foreground: #171717;
 }
 
+/* Replace the media query with this .dark selector.
+   This allows next-themes to toggle the variables manually.
+*/
+.dark {
+  --background: #0f172a; /* Matched to slate-900 for better consistency */
+  --foreground: #ededed;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

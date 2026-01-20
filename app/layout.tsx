@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider"; // Import the provider
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,24 +13,25 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// 1. Separate Viewport export (Next.js 14+)
+// 1. Updated Viewport: Changes address bar color based on system theme
 export const viewport: Viewport = {
-  themeColor: "#0f172a", // Matches your slate-900 bg
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
 
-// 2. Strong SEO & Social Metadata
+// 2. Your Strong XRP Metadata
 export const metadata: Metadata = {
-  // Base Title & Template for child pages
   title: {
     default: "XRP | Secure Web3 Connection",
-    template: "MetaMask | Wallet Explore", // e.g., "MetaMask | Wallet Explorer"
+    template: "%s | XRP Explorer", // Fixed template to use dynamic page titles
   },
   description:
     "The most trusted directory for Web3 wallets. Securely connect, explore, and resolve issues with MetaMask, Trust Wallet, Ledger, and hundreds of other blockchain providers.",
   
-  // Search Engine Keywords
   keywords: [
     "crypto wallet",
     "web3",
@@ -39,17 +41,16 @@ export const metadata: Metadata = {
     "ethereum",
     "secure connection",
     "dapp explorer",
+    "XRP",
+    "Ripple"
   ],
 
-  // Authors & Creator
   authors: [{ name: "XRP Explorer Team" }],
   creator: "XRP Explorer",
   publisher: "XRP Explorer Inc.",
 
-  // Base URL (Replace with your actual domain)
   metadataBase: new URL("https://wallet-explorer-app.vercel.app"), 
 
-  // Open Graph (Facebook, LinkedIn, Discord previews)
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -60,7 +61,7 @@ export const metadata: Metadata = {
       "Connect seamlessly with the decentralized web. Support for 300+ wallets including MetaMask, Ledger, and Trust wallet.",
     images: [
       {
-        url: "/og-image.png", // Ensure you add this image to your /public folder
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "XRP Explorer Preview",
@@ -68,23 +69,20 @@ export const metadata: Metadata = {
     ],
   },
 
-  // Twitter Card (X previews)
   twitter: {
     card: "summary_large_image",
     title: "XRP Explorer | Secure Web3 Connection",
     description: "The trusted gateway to the decentralized world. Connect your assets securely.",
-    images: ["/og-image.png"], // Same image as OG
-    creator: "@XRPexplorer", // Your Twitter handle
+    images: ["/og-image.png"],
+    creator: "@XRPexplorer",
   },
 
-  // Icons (Favicon, Apple Touch Icon)
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
 
-  // Robot Crawling (Allow Google to index your site)
   robots: {
     index: true,
     follow: true,
@@ -104,11 +102,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // 3. suppressHydrationWarning is required for next-themes to work without errors
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        {/* 4. Wrap app in ThemeProvider */}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

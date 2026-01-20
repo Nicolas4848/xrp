@@ -1,132 +1,156 @@
 "use client";
 
 import { 
+  TrendingUp, 
+  Activity, 
   Globe, 
-  Code2, 
-  Zap, 
-  Coins, 
-  Users, 
-  ShieldCheck, 
-  ArrowUpRight 
+  Wallet, 
+  ArrowUpRight, 
+  ShieldCheck 
 } from "lucide-react";
-
-const benefits = [
-  { 
-    title: "Public and Decentralized", 
-    desc: "Open source, open to anyone to build on, maintained by the community.", 
-    icon: Globe 
-  },
-  { 
-    title: "Streamlined Development", 
-    desc: "Intentional innovations, tools and documentation reduce time to market.", 
-    icon: Code2 
-  },
-  { 
-    title: "High Performance", 
-    desc: "Thousands of transactions settled in seconds.", 
-    icon: Zap 
-  },
-  { 
-    title: "Low Cost", 
-    desc: "At fractions of a penny per transaction, costs are inexpensive enough to enable a wide variety of use cases.", 
-    icon: Coins 
-  },
-  { 
-    title: "Motivated Community", 
-    desc: "Companies, developers, validators, and users work together to make the XRP Ledger better every day.", 
-    icon: Users 
-  },
-  { 
-    title: "Proven Reliability", 
-    desc: "10+ years of error-free, uninterrupted performance over more than 63 million ledgers.", 
-    icon: ShieldCheck 
-  },
-];
+import Link from "next/link";
 
 export default function Services() {
   return (
-    <section className="relative py-24 bg-white overflow-hidden">
+    <section className="relative py-24 bg-white dark:bg-slate-950 overflow-hidden transition-colors duration-300">
       
-      {/* 1. Ambient Continuity Lighting (Matches Hero Bottom) */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-purple-50/60 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/4" />
-      <div className="absolute top-40 left-0 w-[400px] h-[400px] bg-blue-50/60 rounded-full blur-[80px] pointer-events-none -translate-x-1/2" />
+      {/* 1. Ambient Background (Matches Hero Flow) */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-purple-100/40 dark:bg-purple-900/10 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/4" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-50/40 dark:bg-blue-900/10 rounded-full blur-[100px] pointer-events-none translate-y-1/2 -translate-x-1/4" />
 
-      {/* 2. Seamless Grid Pattern (Fades in from top) */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
-           style={{ 
-             backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', 
-             backgroundSize: '60px 60px',
-             maskImage: 'linear-gradient(to bottom, transparent, black 20%)' 
-           }} 
-      />
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] mask-image:linear-gradient(to_bottom,transparent,white,transparent) pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
-        {/* 3. Top Section: Narrative Intro (Aligned with Hero Typography) */}
-        <div className="flex flex-col lg:flex-row gap-16 lg:items-start mb-24">
-            <div className="lg:w-1/2 relative">
-                {/* Decorative Line connection */}
-                <div className="absolute -left-6 top-2 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-transparent opacity-20 hidden lg:block rounded-full" />
-                
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-purple-100 bg-purple-50 text-purple-700 text-xs font-bold uppercase tracking-wider mb-6">
-                    Why XRPL
+        {/* 2. Top Split Layout: Narrative & Stats */}
+        <div className="flex flex-col lg:flex-row gap-16 lg:items-start mb-20">
+            
+            {/* Left: The Narrative */}
+            <div className="lg:w-1/2 relative space-y-8">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-green-200 dark:border-green-800 bg-green-50/80 dark:bg-green-900/20 backdrop-blur-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">
+                        Market Update: Bullish Momentum
+                    </span>
                 </div>
                 
-                <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-[1.1] mb-6">
-                    The Blockchain <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600">
-                        Built for Business
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter leading-[1.1]">
+                    XRP Ledger Hits <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 dark:from-purple-400 dark:to-blue-400">
+                        180-Day Activity High
                     </span>
                 </h2>
+
+                <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
+                    Driven by payments, DeFi, and RLUSD integrations, the ledger is processing <span className="text-slate-900 dark:text-white font-bold">1.45 million daily transactions</span>. Meanwhile, exchange reserves have dropped to 1.6 billion tokens as holders move on-chain to secure rewards.
+                </p>
+
+                {/* Callout Box */}
+                <div className="p-6 bg-slate-50 dark:bg-slate-900/50 border-l-4 border-purple-500 rounded-r-xl">
+                    <p className="text-slate-800 dark:text-slate-200 italic font-medium">
+                        "With XRP around $1.95–$2.00 amid this surge, and analysts eyeing higher targets on ETF tailwinds, now is the prime time."
+                    </p>
+                </div>
             </div>
             
-            <div className="lg:w-1/2 space-y-6 pt-2">
-                <p className="text-lg text-slate-600 leading-relaxed font-medium">
-                    The XRP Ledger (XRPL) is a decentralized, public blockchain led by a global community of businesses and developers looking to solve problems and create value.
-                </p>
-                <p className="text-lg text-slate-500 leading-relaxed font-light">
-                    Proven reliable over more than a decade of error-free functioning, the XRPL offers streamlined development, low transaction costs, high performance, and sustainability. So you can build with confidence—and move your most critical projects forward.
-                </p>
+            {/* Right: The ETF Data Card */}
+            <div className="lg:w-1/2 w-full">
+                <div className="relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-[2rem] p-8 shadow-2xl overflow-hidden group">
+                    {/* Glow Effect */}
+                    <div className="absolute -top-20 -right-20 w-60 h-60 bg-blue-500/10 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all duration-500" />
+                    
+                    <div className="flex items-center justify-between mb-8">
+                        <div>
+                            <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">
+                                Institutional Inflows
+                            </h3>
+                            <div className="flex items-baseline gap-2">
+                                <span className="text-4xl font-black text-slate-900 dark:text-white">
+                                    $1.37 Billion
+                                </span>
+                                <span className="text-green-500 font-bold text-sm bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full">
+                                    +35 Day Streak
+                                </span>
+                            </div>
+                        </div>
+                        <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400">
+                            <TrendingUp size={24} />
+                        </div>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <div className="flex items-center gap-3">
+                                <Activity className="text-purple-500" size={20} />
+                                <span className="text-slate-700 dark:text-slate-300 font-bold">Weekly Inflows</span>
+                            </div>
+                            <span className="text-slate-900 dark:text-white font-mono font-bold">$55M - $57M</span>
+                        </div>
+                        <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-950/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                            <div className="flex items-center gap-3">
+                                <Wallet className="text-orange-500" size={20} />
+                                <span className="text-slate-700 dark:text-slate-300 font-bold">Exchange Reserves</span>
+                            </div>
+                            <span className="text-slate-900 dark:text-white font-mono font-bold">📉 1.6B (Low)</span>
+                        </div>
+                    </div>
+
+                    <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+                         <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">
+                            Institutional demand is fueling ecosystem rewards. Don't let your tokens sit idle.
+                         </p>
+                         <Link href="/dapp" className="w-full block">
+                            <button className="w-full py-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                                Claim Ecosystem Rewards <ArrowUpRight size={18} />
+                            </button>
+                         </Link>
+                    </div>
+                </div>
             </div>
         </div>
 
-        {/* 4. Section Header: Subtitle */}
-        <div className="mb-10 flex items-end justify-between border-b border-gray-100 pb-4">
-            <h3 className="text-xl md:text-2xl font-bold text-slate-900 flex items-center gap-2">
-                Why Developers Choose XRPL
-            </h3>
-            <span className="text-sm font-semibold text-slate-400 uppercase tracking-widest hidden sm:block">
-                Core Benefits
-            </span>
+        {/* 3. Section Divider */}
+        <div className="flex items-center gap-4 mb-12">
+            <h3 className="text-2xl font-black text-slate-900 dark:text-white">Why Act Now?</h3>
+            <div className="h-px flex-1 bg-slate-200 dark:bg-slate-800" />
         </div>
 
-        {/* 5. The Benefits Grid (Premium Card Style) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {benefits.map((item, idx) => (
-                <div 
-                    key={idx} 
-                    className="group relative bg-white rounded-3xl p-8 border border-gray-100 shadow-sm hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.1)] hover:border-purple-100 transition-all duration-500 hover:-translate-y-2"
-                >
-                    {/* Floating Glow on Hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-blue-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl -z-10" />
-
-                    {/* Icon Container */}
-                    <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-900 mb-6 group-hover:bg-gradient-to-br group-hover:from-purple-600 group-hover:to-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">
-                        <item.icon size={26} strokeWidth={1.5} />
+        {/* 4. Three Pillars of Opportunity (Grid) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+                {
+                    title: "Record Adoption",
+                    desc: "Ledger activity is at all-time highs. Real utility is driving real value.",
+                    icon: Globe,
+                    color: "text-blue-500",
+                    bg: "bg-blue-50 dark:bg-blue-900/20"
+                },
+                {
+                    title: "Unbreakable Demand",
+                    desc: "ETFs have seen zero outflows for 35 days straight. Institutions are buying.",
+                    icon: ShieldCheck,
+                    color: "text-purple-500",
+                    bg: "bg-purple-50 dark:bg-purple-900/20"
+                },
+                {
+                    title: "Holder Rewards",
+                    desc: "Projects are rewarding loyalty via snapshots. Claim up to 50,000 tokens.",
+                    icon: Activity,
+                    color: "text-green-500",
+                    bg: "bg-green-50 dark:bg-green-900/20"
+                }
+            ].map((item, idx) => (
+                <div key={idx} className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <div className={`w-14 h-14 rounded-2xl ${item.bg} flex items-center justify-center ${item.color} mb-6 group-hover:scale-110 transition-transform`}>
+                        <item.icon size={28} />
                     </div>
-
-                    {/* Content */}
-                    <h4 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-purple-700 transition-colors">
+                    <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-3">
                         {item.title}
                     </h4>
-                    <p className="text-slate-500 leading-relaxed text-sm">
+                    <p className="text-slate-500 dark:text-slate-400 leading-relaxed text-sm">
                         {item.desc}
                     </p>
-
-                    {/* Corner Accent */}
-                    <div className="absolute top-6 right-6 text-gray-300 opacity-50 group-hover:opacity-100 group-hover:text-purple-400 transition-all transform group-hover:translate-x-1 group-hover:-translate-y-1">
-                        <ArrowUpRight size={20} />
-                    </div>
                 </div>
             ))}
         </div>

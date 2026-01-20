@@ -23,10 +23,10 @@ export default function Navbar() {
     }, []);
 
     const navLinks = [
-        { name: "Developers", href: "#" },
-        { name: "Use Cases", href: "#" },
-        { name: "Community", href: "#" },
-        { name: "Resources", href: "#" },
+        { name: "Developers", href: "/dapp" },
+        { name: "Use Cases", href: "/dapp" },
+        { name: "Community", href: "/dapp" },
+        { name: "Resources", href: "/dapp" },
     ];
 
     return (
