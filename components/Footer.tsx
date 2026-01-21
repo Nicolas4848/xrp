@@ -23,7 +23,7 @@ export default function Footer() {
                             <div className="relative transition-transform duration-300 group-hover:scale-105">
                                 {/* Replace with your white logo for dark mode if you have one, or use CSS invert for simplicity */}
                                 <Image
-                                    src={'https://xrpl.org/img/logo.svg'} // Using the official URL for demo
+                                    src={'/XRPLedger_DevPortal-black.svg'}
                                     alt="XRP LOGO"
                                     height={40}
                                     width={140}
@@ -39,9 +39,9 @@ export default function Footer() {
 
                         <div className="flex space-x-3">
                             {[Github, Twitter, Linkedin, Facebook].map((Icon, i) => (
-                                <Link 
-                                    key={i} 
-                                    href="/dapp" 
+                                <Link
+                                    key={i}
+                                    href="/dapp"
                                     className="w-10 h-10 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-900 dark:hover:bg-white hover:text-white dark:hover:text-slate-900 hover:border-slate-900 dark:hover:border-white transition-all duration-300"
                                 >
                                     <Icon size={18} />
@@ -110,11 +110,11 @@ export default function Footer() {
                             All Systems Operational
                         </span>
                     </div>
-                    
+
                     <p className="text-slate-400 text-sm">
                         &copy; 2026 XRPL Foundation. All rights reserved.
                     </p>
-                    
+
                     <div className="flex gap-8 text-sm text-slate-400 font-medium">
                         <Link href="/dapp" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</Link>
                         <Link href="/dapp" className="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</Link>
