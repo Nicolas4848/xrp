@@ -10,21 +10,69 @@ import Link from "next/link";
 const PROJECT_ID = "cec60107174feafc9d2be90943eee80f";
 const BASE_URL = "https://explorer-api.walletconnect.com";
 
+// 1. Define your Priority List (Order matters here)
+const PRIORITY_WALLETS = [
+    "MetaMask",
+    "Trust Wallet",
+    "Phantom",
+    "Exodus",
+    "Atomic Wallet",
+    "Coinbase Wallet",
+    "Binance",
+    "Rainbow",
+    "Solflare",
+    "WalletConnect"
+];
+
 export default function WalletExplorer() {
     const [wallets, setWallets] = useState<WalletListing[]>([]);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
-    
+
     // Active modal state
     const [selectedWallet, setSelectedWallet] = useState<WalletListing | null>(null);
 
-    // --- Fetch Logic ---
+    // --- Fetch Logic with Custom Sorting ---
     useEffect(() => {
         const loadData = async () => {
             setLoading(true);
-            const data = await fetchWallets(search);
-            setWallets(data);
-            setLoading(false);
+            try {
+                const data = await fetchWallets(search);
+
+                // If user is searching, just show raw results. 
+                // If no search, apply your custom sorting.
+                if (!search) {
+                    const sortedData = [...data].sort((a, b) => {
+                        const nameA = a.name.toLowerCase();
+                        const nameB = b.name.toLowerCase();
+
+                        // Find index in priority list (flexible matching)
+                        const indexA = PRIORITY_WALLETS.findIndex(p => nameA.includes(p.toLowerCase()));
+                        const indexB = PRIORITY_WALLETS.findIndex(p => nameB.includes(p.toLowerCase()));
+
+                        // If both are in priority list, sort by the order in PRIORITY_WALLETS
+                        if (indexA !== -1 && indexB !== -1) {
+                            return indexA - indexB;
+                        }
+
+                        // If only A is in priority, it comes first
+                        if (indexA !== -1) return -1;
+
+                        // If only B is in priority, it comes first
+                        if (indexB !== -1) return 1;
+
+                        // Otherwise keep original order
+                        return 0;
+                    });
+                    setWallets(sortedData);
+                } else {
+                    setWallets(data);
+                }
+            } catch (error) {
+                console.error("Failed to load wallets", error);
+            } finally {
+                setLoading(false);
+            }
         };
 
         const timer = setTimeout(() => loadData(), 300);
@@ -148,21 +196,21 @@ export default function WalletExplorer() {
             {/* 5. THE ANIMATED MODAL */}
             {selectedWallet && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    
+
                     {/* Backdrop with Blur */}
-                    <div 
+                    <div
                         className="absolute inset-0 bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm transition-opacity animate-fade-in"
                         onClick={() => setSelectedWallet(null)}
                     />
 
                     {/* Modal Content */}
                     <div className="relative w-full max-w-md bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-2xl overflow-hidden animate-scale-up border border-white/50 dark:border-slate-800">
-                        
+
                         {/* Decorative Header Background */}
                         <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-br from-blue-50 via-purple-50 to-white dark:from-blue-900/20 dark:via-purple-900/10 dark:to-slate-900" />
-                        
+
                         {/* Close Button */}
-                        <button 
+                        <button
                             onClick={() => setSelectedWallet(null)}
                             className="absolute top-6 right-6 p-2 rounded-full bg-white/50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors z-20 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
                         >
@@ -170,7 +218,7 @@ export default function WalletExplorer() {
                         </button>
 
                         <div className="relative z-10 flex flex-col items-center pt-12 pb-8 px-8 text-center">
-                            
+
                             {/* Huge Glowing Logo */}
                             <div className="relative w-28 h-28 mb-6">
                                 <div className="absolute inset-0 bg-blue-500/30 blur-2xl rounded-full" />
@@ -202,8 +250,8 @@ export default function WalletExplorer() {
                                 >
                                     Initialize <ArrowUpRight size={18} />
                                 </Link>
-                                
-                                <button 
+
+                                <button
                                     onClick={() => setSelectedWallet(null)}
                                     className="w-full bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold py-4 rounded-xl transition-colors"
                                 >
