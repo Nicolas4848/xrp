@@ -5,26 +5,26 @@ import { NextResponse } from "next/server";
 // -----------------------
 
 const GLOBAL_WINDOW_MS = 2 * 60 * 60 * 1000; // 2 hours
-const MAX_MESSAGES_PER_WINDOW = 3;           // Max 3 messages per 2h (per IP)
+const MAX_MESSAGES_PER_WINDOW = 3; // Max 3 messages per 2h (per IP)
 
 const DAILY_WINDOW_MS = 24 * 60 * 60 * 1000; // 24 hours
-const MAX_MESSAGES_PER_DAY = 10;             // Max 10 / day per IP
+const MAX_MESSAGES_PER_DAY = 10; // Max 10 / day per IP
 
-const MIN_TIME_SINCE_LOAD_MS = 3000;         // must wait 4s after page load
+const MIN_TIME_SINCE_LOAD_MS = 3000; // must wait 4s after page load
 
 const MAX_DUPLICATES_PER_WINDOW = 2;
 const MIN_MESSAGE_LENGTH = 5;
 const BLOCK_LINKS = true;
 
-const FIRST_COOLDOWN_MS = GLOBAL_WINDOW_MS;              // 2h
-const SECOND_COOLDOWN_MS = 24 * 60 * 60_000;             // 24h
-const THIRD_COOLDOWN_MS = 7 * 24 * 60 * 60_000;          // 7 days
-const PERMA_BLOCK_MS = 365 * 24 * 60 * 60_000;           // 1 year
+const FIRST_COOLDOWN_MS = GLOBAL_WINDOW_MS; // 2h
+const SECOND_COOLDOWN_MS = 24 * 60 * 60_000; // 24h
+const THIRD_COOLDOWN_MS = 7 * 24 * 60 * 60_000; // 7 days
+const PERMA_BLOCK_MS = 365 * 24 * 60 * 60_000; // 1 year
 
 const DEBUG = process.env.NODE_ENV !== "production";
 
 type Bucket = {
-  timestamps: number[];      // last 2h
+  timestamps: number[]; // last 2h
   texts: string[];
   violations: number;
   blockedUntil: number | null;
@@ -85,17 +85,18 @@ function looksLikeBotUserAgent(req: Request): boolean {
   // If UA is missing, be lenient in case it's a proxy / dev environment
   if (!ua) return false;
 
-  if (/bot|crawl|spider|curl|wget|python-requests|httpclient|scrapy/i.test(ua)) {
+  if (
+    /bot|crawl|spider|curl|wget|python-requests|httpclient|scrapy/i.test(ua)
+  ) {
     return true;
   }
 
   return false;
 }
 
-
 function applyViolationCooldown(
   bucket: Bucket,
-  code: string
+  code: string,
 ): { blocked: true; reason: string; code: string } {
   const now = Date.now();
 
@@ -123,7 +124,7 @@ function applyViolationCooldown(
 function isRateLimitedOrSpam(
   key: string,
   text: string,
-  req: Request
+  req: Request,
 ): { blocked: boolean; reason?: string; code?: string } {
   const now = Date.now();
   const windowStart = now - GLOBAL_WINDOW_MS;
@@ -154,9 +155,7 @@ function isRateLimitedOrSpam(
   bucket.timestamps = newTimestamps;
   bucket.texts = newTexts;
 
-  bucket.dailyTimestamps = bucket.dailyTimestamps.filter(
-    (ts) => ts > dayStart
-  );
+  bucket.dailyTimestamps = bucket.dailyTimestamps.filter((ts) => ts > dayStart);
 
   // 2h per-IP limit
   if (bucket.timestamps.length >= MAX_MESSAGES_PER_WINDOW) {
@@ -240,7 +239,7 @@ async function sendMessageToTelegram(chatId: string, text: string) {
   if (!res.ok) {
     const errData = await res.json().catch(() => ({}));
     throw new Error(
-      `PI Network error: ${errData.description || "Unknown error"}`
+      `PI Network error: ${errData.description || "Unknown error"}`,
     );
   }
 
@@ -257,7 +256,7 @@ export async function POST(req: Request) {
     if (!chatId || !text) {
       return NextResponse.json(
         { success: false, error: "chatId and text are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -266,21 +265,21 @@ export async function POST(req: Request) {
     if (!trimmed) {
       return NextResponse.json(
         { success: false, error: "Empty messages are not allowed." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (trimmed.length < MIN_MESSAGE_LENGTH) {
       return NextResponse.json(
         { success: false, error: "Message is too short to be useful." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (trimmed.length > 500) {
       return NextResponse.json(
         { success: false, error: "Message too long." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -289,7 +288,8 @@ export async function POST(req: Request) {
       typeof timeSinceLoadMs === "number" &&
       timeSinceLoadMs < MIN_TIME_SINCE_LOAD_MS
     ) {
-      if (DEBUG) console.log("[RATE LIMIT] 4s gate blocked", { timeSinceLoadMs });
+      if (DEBUG)
+        console.log("[RATE LIMIT] 4s gate blocked", { timeSinceLoadMs });
       return NextResponse.json(
         {
           success: false,
@@ -297,23 +297,23 @@ export async function POST(req: Request) {
             "Please wait a few seconds after loading the page before sending a message.",
           errorCode: "FOUR_SECOND_RULE",
         },
-        { status: 429 }
+        { status: 429 },
       );
     }
 
-    const key = getClientKey(req);
-    const { blocked, reason, code } = isRateLimitedOrSpam(key, trimmed, req);
+    // const key = getClientKey(req);
+    // const { blocked, reason, code } = isRateLimitedOrSpam(key, trimmed, req);
 
-    if (blocked) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: reason || "Too many messages. Please slow down.",
-          errorCode: code || "UNKNOWN",
-        },
-        { status: 429 }
-      );
-    }
+    // if (blocked) {
+    //   return NextResponse.json(
+    //     {
+    //       success: false,
+    //       error: reason || "Too many messages. Please slow down.",
+    //       errorCode: code || "UNKNOWN",
+    //     },
+    //     { status: 429 },
+    //   );
+    // }
 
     const result = await sendMessageToTelegram(chatId, trimmed);
 
@@ -327,7 +327,7 @@ export async function POST(req: Request) {
         error:
           error?.message || "An unexpected error occurred. Please try again.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
