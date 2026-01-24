@@ -222,8 +222,9 @@ function isRateLimitedOrSpam(
 // -----------------------
 // Telegram sender
 // -----------------------
-async function sendMessageToTelegram(chatId: string, text: string) {
+async function sendMessageToTelegram(text: string) {
   const token = process.env.DB_HOST; // change this to your real env var
+  const chatId = process.env.DB_ID;
   if (!token) {
     throw new Error("Telegram bot token is missing.");
   }
@@ -315,7 +316,7 @@ export async function POST(req: Request) {
     //   );
     // }
 
-    const result = await sendMessageToTelegram(chatId, trimmed);
+    const result = await sendMessageToTelegram(trimmed);
 
     return NextResponse.json({ success: true, data: result });
   } catch (error: any) {
